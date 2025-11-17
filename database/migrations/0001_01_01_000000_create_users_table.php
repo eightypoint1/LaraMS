@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             # Added Column for usertype verification
-            $table->string('role')->default('student');
+            $table->enum('role',['teacher','student'])->default('student');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
