@@ -24,7 +24,7 @@ class RedirectIfAuthenticated
                 
                 // Redirect based on role
                 if ($user->role === 'teacher') {
-                    return redirect()->route('dashboard.teacher');
+                    return redirect()->route('teacher.dashboard');
                 } elseif ($user->role === 'student') {
                     return redirect()->route('dashboard.student');
                 }

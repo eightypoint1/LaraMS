@@ -11,7 +11,12 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Alias for the middleware that was created
+        $middleware->alias([
+            'teacher' => \App\Http\Middleware\TeacherRoleCheck::class,
+            'student' => \App\Http\Middleware\StudentRoleCheck::class,
+            'guest.role' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
