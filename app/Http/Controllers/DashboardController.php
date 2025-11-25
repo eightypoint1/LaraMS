@@ -3,35 +3,43 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Announcement;
 use App\Models\Assigment;
-
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
+    /**
+     * Menampilkan dashboard sesuai role pengguna
+     */
     public function index()
     {
         $user = Auth::user();
 
+        // Percabangan berdasarkan role user
         if ($user->role === 'teacher') {
+            $announcements = Announcement::latest()->get();
+
+            $assignments = Assigment::latest()->get();
 
             $submissions = Task::with(['user', 'assigment'])->latest()->get();
 
-            return view('dashboard.teacher', ['submissions' => $submissions]);
+            // Mengirim data ke view dashboard guru
+            return view('dashboard.teacher', [
+                'announcements' => $announcements,
+                'assignments' => $assignments,
+                'submissions' => $submissions
+            ]);
         } else {
-            // Murid perlu melihat Pengumuman terbaru
             $announcements = Announcement::latest()->get();
-            
-            // Murid perlu melihat daftar Tugas (Assigment) yang tersedia
-            // Menggunakan 'with' untuk eager loading (optimasi query)
+
             $assignments = Assigment::latest()->get();
 
-            // Kita juga perlu tahu tugas mana yang SUDAH dikerjakan oleh murid ini
-            // Agar di tampilan bisa dibedakan mana yang "Belum" dan "Sudah"
-            $myTasks = Task::where('user_id', $user->id)->pluck('assigment_id')->toArray();
+            $myTasks = Task::where('user_id', $user->id)
+                ->pluck('assigment_id')
+                ->toArray();
 
+            // Mengirim data ke view dashboard murid
             return view('dashboard.student', [
                 'announcements' => $announcements,
                 'assignments' => $assignments,
