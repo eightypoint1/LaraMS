@@ -4,62 +4,57 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Murid mengumpulkan tugas (upload file jawaban)
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'assigment_id' => 'required|exists:assigments,id',
+            'file_path' => 'required|file|mimes:pdf,doc,docx,zip,jpg,png|max:5120',
+        ]);
+
+        $existingTask = Task::where('user_id', Auth::id())
+            ->where('assigment_id', $request->assigment_id)
+            ->first();
+
+        if ($existingTask) {
+            return redirect()->back()->with('error', 'Anda sudah mengumpulkan tugas ini sebelumnya.');
+        }
+
+        $filePath = $request->file('file_path')->store('submissions', 'public');
+
+        // SIMPAN KE DATABASE
+        Task::create([
+            'user_id' => Auth::id(),
+            'assigment_id' => $request->assigment_id,
+            'file_path' => $filePath,
+            'score' => null,
+        ]);
+
+        return redirect()->back()->with('success', 'Tugas berhasil dikumpulkan!');
     }
 
     /**
-     * Display the specified resource.
+     * Guru memberi nilai pada submission murid
      */
-    public function show(Task $task)
+    public function update(Request $request, $id)
     {
-        //
-    }
+        $task = Task::findOrFail($id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Task $task)
-    {
-        //
-    }
+        $request->validate([
+            'score' => 'required|integer|min:0|max:100',
+        ]);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Task $task)
-    {
-        //
-    }
+        $task->update([
+            'score' => $request->score
+        ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Task $task)
-    {
-        //
+        return redirect()->back()->with('success', 'Nilai berhasil disimpan!');
     }
 }
