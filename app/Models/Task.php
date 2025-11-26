@@ -12,4 +12,15 @@ class Task extends Model
         'file_path',
         'score',
     ];
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'assigment_id');
+    }
 }

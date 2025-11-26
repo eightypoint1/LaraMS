@@ -5,13 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
 {
-    /**
-     * Murid mengumpulkan tugas (upload file jawaban)
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -24,12 +20,11 @@ class TaskController extends Controller
             ->first();
 
         if ($existingTask) {
-            return redirect()->back()->with('error', 'Anda sudah mengumpulkan tugas ini sebelumnya.');
+            return redirect()->back()->with('error', 'Already submitted!');
         }
 
         $filePath = $request->file('file_path')->store('submissions', 'public');
 
-        // SIMPAN KE DATABASE
         Task::create([
             'user_id' => Auth::id(),
             'assigment_id' => $request->assigment_id,
@@ -37,12 +32,9 @@ class TaskController extends Controller
             'score' => null,
         ]);
 
-        return redirect()->back()->with('success', 'Tugas berhasil dikumpulkan!');
+        return redirect()->route('assignments.index')->with('success', 'Submission successful!');
     }
 
-    /**
-     * Guru memberi nilai pada submission murid
-     */
     public function update(Request $request, $id)
     {
         $task = Task::findOrFail($id);
@@ -51,10 +43,8 @@ class TaskController extends Controller
             'score' => 'required|integer|min:0|max:100',
         ]);
 
-        $task->update([
-            'score' => $request->score
-        ]);
+        $task->update(['score' => $request->score]);
 
-        return redirect()->back()->with('success', 'Nilai berhasil disimpan!');
+        return redirect()->back()->with('success', 'Score saved!');
     }
 }
