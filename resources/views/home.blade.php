@@ -123,8 +123,8 @@
 
 
     <div class="btn-box">
-        <a href="{{ route('login') }}" class="btn btn-login">Masuk</a>
-        <a href="{{ route('register') }}" class="btn btn-register">Daftar</a>
+        <a href="{{ route('lms.login') }}" class="btn btn-login">Masuk</a>
+        <a href="{{ route('lms.registrasi') }}" class="btn btn-register">Daftar</a>
     </div>
 
     <footer>

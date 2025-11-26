@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Registrasi</title>
 
     <style>
 
@@ -71,12 +71,13 @@
             background: #8298ff;
         }
 
-        .sign-up {
+        .login {
             margin-top: 15px;
             display: block;
             color: #000;
             font-size: 13px;
             text-decoration: underline;
+            margin-bottom: 30px;
         }
 
     </style>
@@ -85,19 +86,29 @@
 
     <div class="container">
         <div class="login-card">
-            <h2>LOGIN</h2>
+            <h2>REGISTRASI</h2>
 
             <form action="#" method="POST">
                 @csrf
 
                 <div class="form-group">
+                    <input type="name" name="nama" placeholder="Nama" class="input-box" required>
                     <input type="email" name="email" placeholder="Email" class="input-box" required>
                     <input type="password" name="password" placeholder="Password" class="input-box" required>
-                    <button type="submit" class="btn-login">LOGIN</button>
+                    <input type="confpassword" name="confirmpassword" placeholder="Confirm Password" class="input-box" required>
+
                 </div>
             </form>
 
-            <a href="{{ route('lms.registrasi') }}" class="sign-up">Sign Up</a>
+            <a href="{{ route('lms.login') }}" class="login">Already registered?</a>
+
+            <form action="#" method="POST">
+                @csrf
+
+                <div class="form-group">
+                    <button type="submit" class="btn-login">REGISTRASI</button>
+                </div>
+            </form>
         </div>
     </div>
 
