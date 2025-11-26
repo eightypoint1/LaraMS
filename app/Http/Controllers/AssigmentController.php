@@ -30,7 +30,7 @@ class AssigmentController extends Controller
 
         return view('assignments.show', [
             'assignment' => $assignment,
-            'submissions' => $submissions
+            'submissions' => $submissions,
         ]);
     }
 

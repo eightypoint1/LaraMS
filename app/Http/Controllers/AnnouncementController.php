@@ -29,7 +29,7 @@ class AnnouncementController extends Controller
             return redirect()->back()->with('success', 'Pengumuman berhasil dibuat!');
         } catch (\Exception $e) {
             // LOG ERROR untuk debugging
-            Log::error('Error membuat pengumuman: ' . $e->getMessage());
+            Log::error('Error membuat pengumuman: '.$e->getMessage());
 
             return redirect()->back()->with('error', 'Gagal membuat pengumuman. Silahkan coba lagi.');
         }
@@ -58,7 +58,8 @@ class AnnouncementController extends Controller
 
             return redirect()->back()->with('success', 'Pengumuman berhasil diperbarui!');
         } catch (\Exception $e) {
-            Log::error('Error mengupdate pengumuman: ' . $e->getMessage());
+            Log::error('Error mengupdate pengumuman: '.$e->getMessage());
+
             return redirect()->back()->with('error', 'Gagal mengupdate pengumuman. Coba lagi.');
         }
     }
@@ -75,7 +76,8 @@ class AnnouncementController extends Controller
 
             return redirect()->back()->with('success', 'Pengumuman berhasil dihapus!');
         } catch (\Exception $e) {
-            Log::error('Error menghapus pengumuman: ' . $e->getMessage());
+            Log::error('Error menghapus pengumuman: '.$e->getMessage());
+
             return redirect()->back()->with('error', 'Gagal menghapus pengumuman. Coba lagi.');
         }
     }

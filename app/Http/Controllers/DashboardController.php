@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
 use App\Models\Announcement;
 use App\Models\Assigment;
+use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -28,7 +28,7 @@ class DashboardController extends Controller
             return view('dashboard.teacher', [
                 'announcements' => $announcements,
                 'assignments' => $assignments,
-                'submissions' => $submissions
+                'submissions' => $submissions,
             ]);
         } else {
             $announcements = Announcement::latest()->get();
@@ -43,7 +43,7 @@ class DashboardController extends Controller
             return view('dashboard.student', [
                 'announcements' => $announcements,
                 'assignments' => $assignments,
-                'submitted_assignment_ids' => $myTasks
+                'submitted_assignment_ids' => $myTasks,
             ]);
         }
     }

@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class TaskController extends Controller
 {
@@ -52,7 +51,7 @@ class TaskController extends Controller
         ]);
 
         $task->update([
-            'score' => $request->score
+            'score' => $request->score,
         ]);
 
         return redirect()->back()->with('success', 'Nilai berhasil disimpan!');
