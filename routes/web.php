@@ -4,8 +4,28 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+
+//lms-login
+Route::get('/lms-login', function () {
+    return view('auth.lms-login');
+})->name('lms.login')->middleware('guest');
+
+//lms-registrasi
+Route::get('/lms-registrasi', function () {
+    return view('auth.lms-registrasi');
+})->name('lms.registrasi')->middleware('guest');
+
+Route::get('/loading', function () {
+    return view('components.loading');
+});
+
+Route::get('/success', function () {
+    return view('components.success');
+});
+
+
 
 // Teacher Dashboard Route
 Route::get('/dashboard/teacher', function () {
