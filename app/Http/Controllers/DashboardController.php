@@ -26,6 +26,7 @@ class DashboardController extends Controller
 
             // Mengirim data ke view dashboard guru
             return view('dashboard.teacher', [
+                'user' => $user,
                 'announcements' => $announcements,
                 'assignments' => $assignments,
                 'submissions' => $submissions,
@@ -35,15 +36,16 @@ class DashboardController extends Controller
 
             $assignments = Assigment::latest()->get();
 
-            $myTasks = Task::where('user_id', $user->id)
+            $studentTasks = Task::where('user_id', $user->id)
                 ->pluck('assigment_id')
                 ->toArray();
 
             // Mengirim data ke view dashboard murid
             return view('dashboard.student', [
+                'user' => $user,
                 'announcements' => $announcements,
                 'assignments' => $assignments,
-                'submitted_assignment_ids' => $myTasks,
+                'submitted_assignment_ids' => $studentTasks,
             ]);
         }
     }

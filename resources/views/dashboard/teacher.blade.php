@@ -26,7 +26,7 @@
 
         <!-- User Info (Right) -->
         <div class="text-black text-sm font-medium">
-            Teacher: USER
+            Teacher: {{$user -> name}}
         </div>
     </header>
 
@@ -61,7 +61,6 @@
         <!-- 3. CONTENT AREA -->
         <main class="flex-1 p-8 overflow-y-auto bg-white">
             
-        
         </main>
     </div>
 
